@@ -10,4 +10,4 @@ RUN mv ${ROCKETMQ_HOME}/bin/runbroker-customize.sh ${ROCKETMQ_HOME}/bin/runbroke
 # && export JAVA_OPT=" -Duser.home=/opt" \
 # && sh mqbroker
 
-ENTRYPOINT ["/bin/bash"]
+#ENTRYPOINT ["/bin/bash"]

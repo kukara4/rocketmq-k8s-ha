@@ -1,0 +1,44 @@
+version: '3'
+services:
+  broker-nameserver-1:
+    image: kukara4/k8s-rocket-mq-nmsrv
+    ports:
+     - 9876
+  broker-nameserver-2:
+    image: kukara4/k8s-rocket-mq-nmsrv
+    ports:
+     - 9876
+  broker-master:
+    image: kukara4/k8s-rocket-mq-brksrv
+    ports:
+     - 10911
+     - 10909
+    links:
+     - broker-nameserver-1
+     - broker-nameserver-2
+    depends_on:
+     - broker-nameserver-1
+     - broker-nameserver-2
+    command: >
+       bash -c 'cd /opt/rocketmq-4.3.0 && ./bin/mqbroker -c cluster/broker-master.properties -n "broker-nameserver-1:9876;broker-nameserver-2:9876"'
+  broker-slave:
+    image: kukara4/k8s-rocket-mq-brksrv
+    ports:
+     - 10911
+     - 10909
+    links:
+     - broker-nameserver-1
+     - broker-nameserver-2
+    depends_on:
+     - broker-nameserver-1
+     - broker-nameserver-2
+    command: >
+       bash -c 'cd /opt/rocketmq-4.3.0 && ./bin/mqbroker -c cluster/broker-slave.properties -n "broker-nameserver-1:9876;broker-nameserver-2:9876"'
+  broker-manager:
+    image: kukara4/k8s-rocket-mq-mgmtsrv
+    links:
+     - broker-nameserver-1
+     - broker-nameserver-2
+    command: >
+      bash -c 'tail -f /dev/null'
+      
