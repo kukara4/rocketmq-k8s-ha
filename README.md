@@ -6,3 +6,4 @@ bash bin/mqbroker -c conf/2m-2s-sync/broker-b-s.properties -n "172.17.0.2:9876;1
 ./bin/mqadmin clusterList -n 172.17.0.2:9876  
 docker build -t rocket-broker .
 build -t apache/rocketmq-base:4.3.0 --build-arg version=4.3.0 ./rocketmq-base
+docker pull kukara4/k8s-rocket-mq-base

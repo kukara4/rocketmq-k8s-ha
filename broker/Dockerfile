@@ -1,4 +1,4 @@
-FROM rocket-base
+FROM kukara4/k8s-rocket-mq-base
 
 EXPOSE 10909 10911
 

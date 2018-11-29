@@ -27,5 +27,7 @@ RUN curl https://dist.apache.org/repos/dist/release/rocketmq/${ROCKETMQ_VERSION}
 
 # add scripts
 COPY scripts/ ${ROCKETMQ_HOME}/bin/
+COPY cluster/ ${ROCKETMQ_HOME}/cluster/
+
 
 VOLUME /opt/logs /opt/store
